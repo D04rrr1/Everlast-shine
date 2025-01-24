@@ -1,0 +1,20 @@
+#include <RCSwitch.h>
+
+RCSwitch mySwitch = RCSwitch();
+
+void setup() {
+    mySwitch.enableTransmit(2); // Указываем пин D2 для передачи данных
+    Serial.begin(9600);         // Инициализируем Serial для отладки
+}
+
+void loop() {
+    // Отправляем число 0
+    mySwitch.send(0, 1); // Отправляем 0 с длиной 1 бита
+    Serial.println("Sent: 0");
+    delay(1000); // Задержка в 1 секунду
+
+    // Отправляем число 1
+    mySwitch.send(1, 1); // Отправляем 1 с длиной 1 бита
+    Serial.println("Sent: 1");
+    delay(1000); // Задержка в 1 секунду
+}

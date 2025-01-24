@@ -1,0 +1,18 @@
+#include <RCSwitch.h>
+
+RCSwitch mySwitch = RCSwitch();
+
+void setup() {
+    Serial.begin(9600);         // Для вывода данных в монитор порта
+    mySwitch.enableReceive(0);  // Указываем пин D2 для приема данных
+}
+
+void loop() {
+    if (mySwitch.available()) { // Проверяем, пришел ли сигнал
+        String receivedMessage = String(mySwitch.getReceivedValue()); // Получаем сигнал
+        Serial.print("Received: ");
+        Serial.println(receivedMessage); // Выводим принятое сообщение
+
+        mySwitch.resetAvailable(); // Сбрасываем состояние для следующего сигнала
+    }
+}

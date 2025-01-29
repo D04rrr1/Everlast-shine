@@ -1,18 +1,26 @@
 #include <RCSwitch.h>
-
 RCSwitch mySwitch = RCSwitch();
-
+const int ledPin = 3; // Пин для светодиода
 void setup() {
-    Serial.begin(9600);         // Для вывода данных в монитор порта
-    mySwitch.enableReceive(0);  // Указываем пин D2 для приема данных
+    Serial.begin(9600);       // Включаем Serial для отладки
+    pinMode(ledPin, OUTPUT);  // Настраиваем пин 3 как выход
+    mySwitch.enableReceive(0);// Подключаем приемник к D2
 }
-
 void loop() {
-    if (mySwitch.available()) { // Проверяем, пришел ли сигнал
-        String receivedMessage = String(mySwitch.getReceivedValue()); // Получаем сигнал
+    if (mySwitch.available()) {
+        int value = mySwitch.getReceivedValue();
         Serial.print("Received: ");
-        Serial.println(receivedMessage); // Выводим принятое сообщение
+        Serial.println(value, BIN); // Выводим полученное значение в двоичном формате
 
-        mySwitch.resetAvailable(); // Сбрасываем состояние для следующего сигнала
+        if (value == B1000) {
+            digitalWrite(ledPin, HIGH); // Включаем светодиод
+            Serial.println("LED ON");
+        } 
+        else if (value == B0100) {
+            digitalWrite(ledPin, LOW);  // Выключаем светодиод
+            Serial.println("LED OFF");
+        }
+
+        mySwitch.resetAvailable(); // Сбрасываем состояние приемника
     }
 }

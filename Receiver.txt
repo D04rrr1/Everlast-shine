@@ -4,7 +4,7 @@ const int ledPin = 3;
 void setup() {
   Serial.begin(9600);
   pinMode(ledPin, OUTPUT);
-  mySwitch.enableReceive(0); // Приёмник на пине D2
+  mySwitch.enableReceive(0);
 }
 void loop() {
   if (mySwitch.available()) {
